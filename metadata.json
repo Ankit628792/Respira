@@ -1,0 +1,6 @@
+{
+  "name": "Respira",
+  "description": "Guided breathing, lung capacity training, and calming relaxation sessions for respiratory wellness.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
