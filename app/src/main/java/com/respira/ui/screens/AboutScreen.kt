@@ -104,7 +104,7 @@ fun AboutScreen(
 
             RespiraLogoMark(size = 32.dp)
 
-            Spacer(modifier = Modifier.width(10.dp))
+            Spacer(modifier = Modifier.width(8.dp))
 
             Text(
                 text = "Respira",
@@ -131,9 +131,9 @@ fun AboutScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Simplified Minimalist Logo
-                RespiraLogoMark(size = 72.dp)
+                RespiraLogoMark(size = 96.dp)
 
-                Spacer(modifier = Modifier.height(14.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
                     text = "Respira",

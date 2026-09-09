@@ -12,18 +12,29 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.respira.ui.components.AppTab
 import com.respira.ui.components.RespiraBottomNavBar
+import com.respira.ui.components.RespiraLogoMark
 import com.respira.ui.screens.AboutScreen
 import com.respira.ui.screens.ExercisesScreen
 import com.respira.ui.screens.GuidedSessionScreen
@@ -34,10 +45,14 @@ import com.respira.ui.screens.ProfileScreen
 import com.respira.ui.screens.SessionSummaryDialog
 import com.respira.ui.screens.SettingsScreen
 import com.respira.ui.theme.MyApplicationTheme
+import com.respira.ui.theme.SecondarySage
 import com.respira.ui.theme.SurfaceBackground
+import com.respira.ui.theme.TextPrimary
 import com.respira.viewmodel.WellnessViewModel
+import kotlinx.coroutines.delay
 
 enum class ScreenDestination {
+    SPLASH,
     MAIN_TABS,
     ABOUT,
     SETTINGS,
@@ -60,7 +75,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun RespiraApp(viewModel: WellnessViewModel) {
     var currentTab by remember { mutableStateOf(AppTab.HOME) }
-    var currentDestination by remember { mutableStateOf(ScreenDestination.MAIN_TABS) }
+    var currentDestination by remember { mutableStateOf(ScreenDestination.SPLASH) }
 
     val activeExercise by viewModel.activeExercise.collectAsState()
     val completedSummary by viewModel.completedSummary.collectAsState()
@@ -77,6 +92,10 @@ fun RespiraApp(viewModel: WellnessViewModel) {
         )
     } else {
         when (currentDestination) {
+            ScreenDestination.SPLASH -> {
+                SplashScreen(onTimeout = { currentDestination = ScreenDestination.MAIN_TABS })
+            }
+
             ScreenDestination.ABOUT -> {
                 BackHandler { currentDestination = ScreenDestination.MAIN_TABS }
                 AboutScreen(onNavigateBack = { currentDestination = ScreenDestination.MAIN_TABS })
@@ -166,5 +185,43 @@ fun RespiraApp(viewModel: WellnessViewModel) {
                 currentTab = AppTab.HOME
             }
         )
+    }
+}
+
+@Composable
+fun SplashScreen(onTimeout: () -> Unit) {
+    LaunchedEffect(Unit) {
+        delay(1200L)
+        onTimeout()
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(SurfaceBackground),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            RespiraLogoMark(size = 110.dp)
+            Spacer(modifier = Modifier.height(22.dp))
+            Text(
+                text = "Respira",
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary,
+                    letterSpacing = (-0.5).sp
+                )
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = "Breathwork & Lung Wellness",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = SecondarySage,
+                    fontWeight = FontWeight.Medium
+                )
+            )
+        }
     }
 }

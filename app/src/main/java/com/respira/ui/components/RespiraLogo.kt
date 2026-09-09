@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +32,7 @@ import com.respira.ui.theme.TextPrimary
 
 /**
  * Official application logo mark for Respira.
- * Uses the exact vector resource (ic_respira_logo) matching the app launcher icon.
+ * Uses the custom application logo asset (img_app_logo) matching the app launcher icon.
  */
 @Composable
 fun RespiraLogoMark(
@@ -42,8 +43,9 @@ fun RespiraLogoMark(
     borderColor: Color = SageBorder
 ) {
     Image(
-        painter = painterResource(id = R.drawable.ic_respira_logo),
+        painter = painterResource(id = R.drawable.img_app_logo),
         contentDescription = "Respira Logo",
+        contentScale = ContentScale.Crop,
         modifier = modifier
             .size(size)
             .clip(CircleShape)

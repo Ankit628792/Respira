@@ -45,6 +45,7 @@ import com.respira.ui.components.DayProgress
 import com.respira.ui.components.LatestTestLungsCard
 import com.respira.ui.components.LungCapacityProgressRingCard
 import com.respira.ui.components.OfflineStatusBar
+import com.respira.ui.components.RespiraLogoMark
 import com.respira.ui.components.WeeklyProgressBarChart
 import com.respira.ui.theme.CardSurface
 import com.respira.ui.theme.PrimaryEmerald
@@ -147,25 +148,32 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = greeting,
-                    style = MaterialTheme.typography.headlineMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = TextPrimary,
-                        letterSpacing = (-0.5).sp
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = greetingSubtitle,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = TextSecondary
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+            Row(
+                modifier = Modifier.weight(1f),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RespiraLogoMark(size = 42.dp)
+                Spacer(modifier = Modifier.width(12.dp))
+                Column {
+                    Text(
+                        text = greeting,
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = TextPrimary,
+                            letterSpacing = (-0.5).sp
+                        ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = greetingSubtitle,
+                        style = MaterialTheme.typography.bodySmall.copy(
+                            color = TextSecondary
+                        ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.width(12.dp))
