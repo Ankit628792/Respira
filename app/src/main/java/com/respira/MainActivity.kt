@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun RespiraApp(viewModel: WellnessViewModel) {
     var currentTab by remember { mutableStateOf(AppTab.HOME) }
-    var currentDestination by remember { mutableStateOf(ScreenDestination.SPLASH) }
+    var currentDestination by remember { mutableStateOf(ScreenDestination.MAIN_TABS) }
 
     val activeExercise by viewModel.activeExercise.collectAsState()
     val completedSummary by viewModel.completedSummary.collectAsState()
