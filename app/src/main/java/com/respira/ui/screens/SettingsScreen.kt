@@ -444,12 +444,17 @@ fun SettingsScreen(
                         Icon(
                             imageVector = Icons.Default.CloudDownload,
                             contentDescription = null,
+                            tint = Color(0xFF042013),
                             modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
                             text = "Download All",
-                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold)
+                            color = Color(0xFF042013),
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF042013)
+                            )
                         )
                     }
                 }

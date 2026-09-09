@@ -15,17 +15,17 @@ import androidx.compose.ui.unit.dp
  */
 val SageSoftEmeraldColorScheme = darkColorScheme(
     primary = PrimaryEmerald,                  // Color(0xFF6EE7B7)
-    onPrimary = Color(0xFF062317),
+    onPrimary = Color(0xFF042013),
     primaryContainer = EmeraldContainer,       // Color(0xFF142B20)
     onPrimaryContainer = OnEmeraldContainer,   // Color(0xFFD1FAE5)
 
     secondary = SecondarySage,                 // Color(0xFF4ADE80)
-    onSecondary = Color(0xFF062812),
+    onSecondary = Color(0xFF042013),
     secondaryContainer = CardSurfaceElevated,  // Color(0xFF18201C)
     onSecondaryContainer = TextPrimary,        // Color(0xFFE2E8F0)
 
     tertiary = SecondarySage,
-    onTertiary = Color(0xFF062317),
+    onTertiary = Color(0xFF042013),
     tertiaryContainer = Color(0xFF162E22),
     onTertiaryContainer = Color(0xFFA7F3D0),
 

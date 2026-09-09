@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -78,7 +79,8 @@ fun LungCapacityTestScreen(
             .fillMaxSize()
             .background(CharcoalBackground)
             .statusBarsPadding()
-            .padding(horizontal = 20.dp, vertical = 16.dp)
+            .navigationBarsPadding()
+            .padding(start = 20.dp, top = 16.dp, end = 20.dp, bottom = 28.dp)
             .testTag("lung_capacity_test_screen")
     ) {
         Column(
@@ -193,13 +195,14 @@ fun LungCapacityTestScreen(
                         shape = RoundedCornerShape(14.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = SoftGreenPrimary,
-                            contentColor = Color(0xFF072115)
+                            contentColor = Color(0xFF042013)
                         )
                     ) {
-                        Icon(Icons.Default.PlayArrow, contentDescription = null)
+                        Icon(Icons.Default.PlayArrow, contentDescription = null, tint = Color(0xFF042013))
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "Begin Deep Inhale",
+                            color = Color(0xFF042013),
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                         )
                     }
@@ -267,11 +270,12 @@ fun LungCapacityTestScreen(
                         shape = RoundedCornerShape(14.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = SoftGreenPrimary,
-                            contentColor = Color(0xFF072115)
+                            contentColor = Color(0xFF042013)
                         )
                     ) {
                         Text(
                             text = "Start Breath Hold",
+                            color = Color(0xFF042013),
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                         )
                     }
@@ -494,11 +498,12 @@ fun LungCapacityTestScreen(
                         shape = RoundedCornerShape(14.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = SoftGreenPrimary,
-                            contentColor = Color(0xFF072115)
+                            contentColor = Color(0xFF042013)
                         )
                     ) {
                         Text(
                             text = "Save & Return to Dashboard",
+                            color = Color(0xFF042013),
                             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                         )
                     }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -96,12 +97,13 @@ fun GuidedSessionScreen(
             .fillMaxSize()
             .background(SurfaceBackground)
             .statusBarsPadding()
+            .navigationBarsPadding()
             .testTag("guided_session_screen")
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 20.dp, vertical = 12.dp),
+                .padding(start = 20.dp, top = 12.dp, end = 20.dp, bottom = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
@@ -391,11 +393,11 @@ fun GuidedSessionScreen(
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = PrimaryEmerald,
-                        contentColor = Color(0xFF062317)
+                        contentColor = Color(0xFF042013)
                     ),
                     shape = RoundedCornerShape(12.dp)
                 ) {
-                    Text("Save & Finish", fontWeight = FontWeight.Bold)
+                    Text("Save & Finish", color = Color(0xFF042013), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {

@@ -77,12 +77,16 @@ fun SessionSummaryDialog(
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = SoftGreenPrimary,
-                    contentColor = Color(0xFF072115)
+                    contentColor = Color(0xFF042013)
                 )
             ) {
                 Text(
                     text = "Complete & Return to Home",
-                    style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)
+                    color = Color(0xFF042013),
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF042013)
+                    )
                 )
             }
         },

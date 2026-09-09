@@ -264,20 +264,22 @@ fun HomeScreen(
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = PrimaryEmerald,
-                        contentColor = Color(0xFF062317)
+                        contentColor = Color(0xFF042013)
                     )
                 ) {
                     Icon(
                         imageVector = Icons.Default.PlayArrow,
                         contentDescription = null,
+                        tint = Color(0xFF042013),
                         modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = "Start",
+                        color = Color(0xFF042013),
                         style = MaterialTheme.typography.labelMedium.copy(
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF062317)
+                            color = Color(0xFF042013)
                         )
                     )
                 }
