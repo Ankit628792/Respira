@@ -214,17 +214,26 @@ class WellnessViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun togglePauseSession() {
-        _isSessionPaused.value = !_isSessionPaused.value
+        val isNowPaused = !_isSessionPaused.value
+        _isSessionPaused.value = isNowPaused
+        val currentEx = _activeExercise.value
+        if (isNowPaused) {
+            audioEngine.pauseAmbient()
+        } else {
+            if (currentEx != null && settings.value.soundEnabled && _isAmbientSoundEnabled.value) {
+                audioEngine.resumeAmbient(currentEx.ambientSound, settings.value.soundVolume)
+            }
+        }
     }
 
     fun toggleAmbientSound() {
         val next = !_isAmbientSoundEnabled.value
         _isAmbientSoundEnabled.value = next
         val currentEx = _activeExercise.value
-        if (next && currentEx != null && settings.value.soundEnabled) {
+        if (next && currentEx != null && settings.value.soundEnabled && !_isSessionPaused.value) {
             audioEngine.startAmbient(currentEx.ambientSound, settings.value.soundVolume)
         } else {
-            audioEngine.stopAmbient()
+            audioEngine.pauseAmbient()
         }
     }
 

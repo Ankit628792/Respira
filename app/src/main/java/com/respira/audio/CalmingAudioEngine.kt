@@ -83,18 +83,22 @@ class CalmingAudioEngine(private val context: Context) {
 
                 // Base gentle meditation frequencies (432Hz ambient tuning or 108Hz drone)
                 val baseFreq = when (soundType) {
-                    "Ocean Waves" -> 136.1 // Om / Earth frequency
+                    "Ocean Waves" -> 110.0 // Soft deep Om swell
                     "Zen Stream" -> 174.0 // Solfeggio soothing
-                    "Deep Drone" -> 108.0
-                    "Forest Rain" -> 216.0
+                    "Deep Drone" -> 108.0 // Soft warm drone
+                    "Forest Rain" -> 180.0
                     else -> 136.1
                 }
+
+                // Low-pass filter state for ultra-soft, warm sound output
+                var lastLpfSample = 0.0
+                val lpfAlpha = 0.12 // Low-pass filter coefficient for buttery softness
 
                 while (isActive && isPlaying) {
                     val twoPi = 2.0 * Math.PI
                     val delta1 = twoPi * baseFreq / sampleRate
                     val delta2 = twoPi * (baseFreq * 1.5) / sampleRate
-                    val swellDelta = twoPi * 0.12 / sampleRate // Slow 8-second swell cycle
+                    val swellDelta = twoPi * 0.10 / sampleRate // Slow 10-second swell cycle
 
                     for (i in buffer.indices) {
                         phase1 += delta1
@@ -106,13 +110,17 @@ class CalmingAudioEngine(private val context: Context) {
                         swellPhase += swellDelta
                         if (swellPhase > twoPi) swellPhase -= twoPi
 
-                        // Gentle wave modulation (ebb & flow between 0.3 and 1.0)
-                        val swell = (0.65 + 0.35 * sin(swellPhase)).toFloat()
+                        // Ultra-soft wave modulation (gentle swell between 0.35 and 0.85)
+                        val swell = (0.60 + 0.25 * sin(swellPhase)).toFloat()
                         val sample1 = sin(phase1)
-                        val sample2 = sin(phase2) * 0.35
+                        val sample2 = sin(phase2) * 0.25
 
-                        val mixed = (sample1 + sample2) * swell * volume * 0.22
-                        val clamped = (mixed.coerceIn(-1.0, 1.0) * Short.MAX_VALUE).toInt().toShort()
+                        val rawMixed = (sample1 + sample2) * swell * volume * 0.10
+
+                        // Exponential moving average Low-Pass Filter to remove any harsh high frequencies
+                        lastLpfSample += lpfAlpha * (rawMixed - lastLpfSample)
+
+                        val clamped = (lastLpfSample.coerceIn(-1.0, 1.0) * Short.MAX_VALUE).toInt().toShort()
                         buffer[i] = clamped
                     }
 
@@ -121,6 +129,23 @@ class CalmingAudioEngine(private val context: Context) {
             }
         } catch (_: Exception) {
             // AudioTrack fallback gracefully
+        }
+    }
+
+    fun pauseAmbient() {
+        isPlaying = false
+        soundJob?.cancel()
+        soundJob = null
+        try {
+            audioTrack?.pause()
+            audioTrack?.flush()
+        } catch (_: Exception) {
+        }
+    }
+
+    fun resumeAmbient(soundType: String, soundVolume: Float) {
+        if (!isPlaying) {
+            startAmbient(soundType, soundVolume)
         }
     }
 
