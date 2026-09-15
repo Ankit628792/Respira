@@ -38,7 +38,6 @@ import com.respira.ui.components.RespiraLogoMark
 import com.respira.ui.screens.AboutScreen
 import com.respira.ui.screens.ExercisesScreen
 import com.respira.ui.screens.GuidedSessionScreen
-import com.respira.ui.screens.HistoryScreen
 import com.respira.ui.screens.HomeScreen
 import com.respira.ui.screens.LungCapacityTestScreen
 import com.respira.ui.screens.ProfileScreen
@@ -79,7 +78,6 @@ fun RespiraApp(viewModel: WellnessViewModel) {
 
     val activeExercise by viewModel.activeExercise.collectAsState()
     val completedSummary by viewModel.completedSummary.collectAsState()
-    val allExercises by viewModel.allExercises.collectAsState()
 
     // Guided Session takes priority if an active exercise is underway
     if (activeExercise != null) {

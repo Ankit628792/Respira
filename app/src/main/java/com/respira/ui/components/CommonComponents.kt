@@ -1,8 +1,5 @@
 package com.respira.ui.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -21,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CloudDone
 import androidx.compose.material.icons.filled.CloudOff
-import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -34,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
@@ -44,15 +39,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.respira.data.model.LungTestRecord
-import com.respira.ui.theme.CharcoalBorder
-import com.respira.ui.theme.CharcoalCard
-import com.respira.ui.theme.CharcoalCardElevated
-import com.respira.ui.theme.MutedGrey
-import com.respira.ui.theme.OffWhite
+import com.respira.ui.theme.CardSurface
+import com.respira.ui.theme.EmeraldContainer
+import com.respira.ui.theme.PrimaryEmerald
+import com.respira.ui.theme.SageBorder
+import com.respira.ui.theme.SecondarySage
 import com.respira.ui.theme.SoftAmber
-import com.respira.ui.theme.SoftGreenAccent
-import com.respira.ui.theme.SoftGreenContainer
-import com.respira.ui.theme.SoftGreenPrimary
+import com.respira.ui.theme.TextPrimary
+import com.respira.ui.theme.TextSecondary
 
 @Composable
 fun OfflineStatusBar(
@@ -66,12 +60,9 @@ fun OfflineStatusBar(
         modifier = modifier
             .fillMaxWidth()
             .testTag("offline_status_bar"),
-        color = if (isOffline) Color(0xFF221F18) else Color(0xFF14241B),
+        color = CardSurface,
         shape = RoundedCornerShape(12.dp),
-        border = androidx.compose.foundation.BorderStroke(
-            1.dp,
-            if (isOffline) Color(0xFF6B5824) else Color(0xFF285437)
-        )
+        border = androidx.compose.foundation.BorderStroke(1.dp, SageBorder)
     ) {
         Row(
             modifier = Modifier
@@ -88,29 +79,29 @@ fun OfflineStatusBar(
                     modifier = Modifier
                         .size(32.dp)
                         .clip(CircleShape)
-                        .background(if (isOffline) SoftAmber.copy(alpha = 0.2f) else SoftGreenPrimary.copy(alpha = 0.2f)),
+                        .background(if (isOffline) SoftAmber.copy(alpha = 0.2f) else PrimaryEmerald.copy(alpha = 0.2f)),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = if (isOffline) Icons.Default.CloudOff else Icons.Default.CloudDone,
                         contentDescription = if (isOffline) "Offline active" else "Online active",
-                        tint = if (isOffline) SoftAmber else SoftGreenPrimary,
+                        tint = if (isOffline) SoftAmber else PrimaryEmerald,
                         modifier = Modifier.size(18.dp)
                     )
                 }
                 Spacer(modifier = Modifier.width(10.dp))
                 Column {
                     Text(
-                        text = if (isOffline) "Offline Mode Enabled" else "Online • Cloud Sync Active",
+                        text = if (isOffline) "Offline Mode" else "Online Active",
                         style = MaterialTheme.typography.labelLarge.copy(
                             fontWeight = FontWeight.SemiBold,
-                            color = OffWhite
+                            color = TextPrimary
                         )
                     )
                     Text(
-                        text = "$downloadedCount of $totalCount exercises saved offline",
+                        text = "$downloadedCount of $totalCount exercises ready offline",
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = MutedGrey,
+                            color = TextSecondary,
                             fontSize = 11.sp
                         )
                     )
@@ -121,7 +112,7 @@ fun OfflineStatusBar(
                 Text(
                     text = if (isOffline) "Offline" else "Online",
                     style = MaterialTheme.typography.labelSmall.copy(
-                        color = if (isOffline) SoftAmber else SoftGreenAccent,
+                        color = if (isOffline) SoftAmber else SecondarySage,
                         fontWeight = FontWeight.Medium
                     ),
                     modifier = Modifier.padding(end = 6.dp)
@@ -131,46 +122,13 @@ fun OfflineStatusBar(
                     onCheckedChange = { isOnline -> onToggleOffline(!isOnline) },
                     modifier = Modifier.testTag("offline_toggle_switch"),
                     colors = SwitchDefaults.colors(
-                        checkedThumbColor = SoftGreenPrimary,
-                        checkedTrackColor = SoftGreenContainer,
+                        checkedThumbColor = PrimaryEmerald,
+                        checkedTrackColor = EmeraldContainer,
                         uncheckedThumbColor = SoftAmber,
                         uncheckedTrackColor = Color(0xFF383120)
                     )
                 )
             }
-        }
-    }
-}
-
-@Composable
-fun StreakBadge(
-    streakDays: Int,
-    modifier: Modifier = Modifier
-) {
-    Surface(
-        modifier = modifier.testTag("streak_badge"),
-        color = Color(0xFF2E2218),
-        shape = RoundedCornerShape(20.dp),
-        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF6B4822))
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Default.LocalFireDepartment,
-                contentDescription = "Streak Flame",
-                tint = Color(0xFFFF9E43),
-                modifier = Modifier.size(18.dp)
-            )
-            Spacer(modifier = Modifier.width(6.dp))
-            Text(
-                text = "$streakDays day streak",
-                style = MaterialTheme.typography.labelMedium.copy(
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFFFFD59E)
-                )
-            )
         }
     }
 }
@@ -184,8 +142,8 @@ fun LungProgressTrendChart(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(CharcoalCard)
-            .border(1.dp, CharcoalBorder, RoundedCornerShape(16.dp))
+            .background(CardSurface)
+            .border(1.dp, SageBorder, RoundedCornerShape(16.dp))
             .padding(16.dp)
             .testTag("progress_trend_chart")
     ) {
@@ -199,25 +157,25 @@ fun LungProgressTrendChart(
                     text = "Lung Capacity Trend",
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = OffWhite
+                        color = TextPrimary
                     )
                 )
                 Text(
                     text = "Vital volume over recent assessments",
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = MutedGrey
+                        color = TextSecondary
                     )
                 )
             }
 
             val latestImprovement = testRecords.firstOrNull()?.improvementPercent ?: 0f
             Surface(
-                color = if (latestImprovement >= 0) SoftGreenPrimary.copy(alpha = 0.15f) else Color.Red.copy(alpha = 0.15f),
+                color = if (latestImprovement >= 0) PrimaryEmerald.copy(alpha = 0.15f) else Color.Red.copy(alpha = 0.15f),
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Text(
                     text = if (latestImprovement >= 0) "+${String.format("%.1f", latestImprovement)}% overall" else "${String.format("%.1f", latestImprovement)}%",
-                    color = if (latestImprovement >= 0) SoftGreenAccent else Color(0xFFFF8B8B),
+                    color = if (latestImprovement >= 0) SecondarySage else Color(0xFFFF8B8B),
                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                 )
@@ -233,14 +191,14 @@ fun LungProgressTrendChart(
                     .fillMaxWidth()
                     .height(110.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFF1B2026)),
+                    .background(CardSurface),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(
                         imageVector = Icons.Default.TrendingUp,
                         contentDescription = null,
-                        tint = MutedGrey,
+                        tint = TextSecondary,
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.height(6.dp))
@@ -248,13 +206,13 @@ fun LungProgressTrendChart(
                         text = "No Trend Data Yet",
                         style = MaterialTheme.typography.labelMedium.copy(
                             fontWeight = FontWeight.Bold,
-                            color = OffWhite
+                            color = TextPrimary
                         )
                     )
                     Text(
                         text = "Take lung capacity tests to track progress over time",
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = MutedGrey,
+                            color = TextSecondary,
                             fontSize = 11.sp
                         )
                     )
@@ -279,7 +237,7 @@ fun LungProgressTrendChart(
                     for (i in 0..3) {
                         val y = padY + (height - 2 * padY) * (i / 3f)
                         drawLine(
-                            color = Color(0xFF282D33),
+                            color = SageBorder,
                             start = Offset(0f, y),
                             end = Offset(width, y),
                             strokeWidth = 1.dp.toPx()
@@ -313,8 +271,8 @@ fun LungProgressTrendChart(
                             path = fillPath,
                             brush = Brush.verticalGradient(
                                 colors = listOf(
-                                    SoftGreenPrimary.copy(alpha = 0.35f),
-                                    SoftGreenPrimary.copy(alpha = 0.02f)
+                                    PrimaryEmerald.copy(alpha = 0.35f),
+                                    PrimaryEmerald.copy(alpha = 0.02f)
                                 )
                             )
                         )
@@ -332,19 +290,19 @@ fun LungProgressTrendChart(
 
                         drawPath(
                             path = linePath,
-                            color = SoftGreenPrimary,
+                            color = PrimaryEmerald,
                             style = Stroke(width = 3.dp.toPx())
                         )
 
                         // Draw dots
                         coords.forEach { coord ->
                             drawCircle(
-                                color = CharcoalCard,
+                                color = CardSurface,
                                 radius = 6.dp.toPx(),
                                 center = coord
                             )
                             drawCircle(
-                                color = SoftGreenAccent,
+                                color = SecondarySage,
                                 radius = 4.dp.toPx(),
                                 center = coord
                             )
@@ -353,12 +311,12 @@ fun LungProgressTrendChart(
                         val x = width / 2f
                         val y = height / 2f
                         drawCircle(
-                            color = CharcoalCard,
+                            color = CardSurface,
                             radius = 8.dp.toPx(),
                             center = Offset(x, y)
                         )
                         drawCircle(
-                            color = SoftGreenAccent,
+                            color = SecondarySage,
                             radius = 6.dp.toPx(),
                             center = Offset(x, y)
                         )
@@ -375,12 +333,12 @@ fun LungProgressTrendChart(
         ) {
             Text(
                 text = "Past tests",
-                style = MaterialTheme.typography.bodySmall.copy(color = MutedGrey, fontSize = 11.sp)
+                style = MaterialTheme.typography.bodySmall.copy(color = TextSecondary, fontSize = 11.sp)
             )
             Text(
                 text = "Latest: ${testRecords.firstOrNull()?.let { "${it.capacityLiters} L" } ?: "--"}",
                 style = MaterialTheme.typography.bodySmall.copy(
-                    color = SoftGreenAccent,
+                    color = SecondarySage,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 11.sp
                 )
