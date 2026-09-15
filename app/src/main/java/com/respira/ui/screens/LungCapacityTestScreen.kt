@@ -48,6 +48,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.respira.ui.components.KeepScreenOn
 import com.respira.ui.theme.CharcoalBackground
 import com.respira.ui.theme.CharcoalBorder
 import com.respira.ui.theme.CharcoalCard
@@ -83,6 +84,8 @@ fun LungCapacityTestScreen(
             .padding(start = 20.dp, top = 16.dp, end = 20.dp, bottom = 28.dp)
             .testTag("lung_capacity_test_screen")
     ) {
+        KeepScreenOn(active = stage != LungTestStage.RESULT)
+
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,

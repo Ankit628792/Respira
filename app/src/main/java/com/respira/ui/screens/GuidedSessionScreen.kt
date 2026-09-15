@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.respira.data.model.Exercise
 import com.respira.ui.components.BreathingTrainerVisualizer
+import com.respira.ui.components.KeepScreenOn
 import com.respira.ui.theme.CardSurface
 import com.respira.ui.theme.CardSurfaceElevated
 import com.respira.ui.theme.PrimaryEmerald
@@ -100,6 +101,8 @@ fun GuidedSessionScreen(
             .navigationBarsPadding()
             .testTag("guided_session_screen")
     ) {
+        KeepScreenOn(active = !isPaused)
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
