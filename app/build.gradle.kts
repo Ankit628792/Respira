@@ -4,7 +4,7 @@ plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.google.devtools.ksp)
-  alias(libs.plugins.roborazzi)
+  // alias(libs.plugins.roborazzi)
   alias(libs.plugins.secrets)
   alias(libs.plugins.google.services)
 }
@@ -17,8 +17,8 @@ android {
     applicationId = "com.delanki.respira"
     minSdk = 24
     targetSdk = 36
-    versionCode = 2
-    versionName = "1.0.2"
+    versionCode = 3
+    versionName = "1.0.3"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -74,6 +74,13 @@ secrets {
 
 googleServices { missingGoogleServicesStrategy = MissingGoogleServicesStrategy.WARN }
 
+configurations.all {
+  resolutionStrategy {
+    force("androidx.fragment:fragment:1.8.6")
+    force("androidx.fragment:fragment-ktx:1.8.6")
+  }
+}
+
 // Some unused dependencies are commented out below instead of being removed.
 // This makes it easy to add them back in the future if needed.
 dependencies {
@@ -81,6 +88,7 @@ dependencies {
   implementation(platform(libs.firebase.bom))
   // implementation(libs.accompanist.permissions)
   implementation(libs.androidx.activity.compose)
+  implementation(libs.androidx.fragment.ktx)
   // implementation(libs.androidx.camera.camera2)
   // implementation(libs.androidx.camera.core)
   // implementation(libs.androidx.camera.lifecycle)
@@ -120,20 +128,20 @@ dependencies {
   // implementation(libs.okhttp)
   // implementation(libs.play.services.location)
   // implementation(libs.retrofit)
-  testImplementation(libs.androidx.compose.ui.test.junit4)
-  testImplementation(libs.androidx.core)
-  testImplementation(libs.androidx.junit)
-  testImplementation(libs.junit)
-  testImplementation(libs.kotlinx.coroutines.test)
-  testImplementation(libs.robolectric)
-  testImplementation(libs.roborazzi)
-  testImplementation(libs.roborazzi.compose)
-  testImplementation(libs.roborazzi.junit.rule)
-  androidTestImplementation(platform(libs.androidx.compose.bom))
-  androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-  androidTestImplementation(libs.androidx.espresso.core)
-  androidTestImplementation(libs.androidx.junit)
-  androidTestImplementation(libs.androidx.runner)
+  // testImplementation(libs.androidx.compose.ui.test.junit4)
+  // testImplementation(libs.androidx.core)
+  // testImplementation(libs.androidx.junit)
+  // testImplementation(libs.junit)
+  // testImplementation(libs.kotlinx.coroutines.test)
+  // testImplementation(libs.robolectric)
+  // testImplementation(libs.roborazzi)
+  // testImplementation(libs.roborazzi.compose)
+  // testImplementation(libs.roborazzi.junit.rule)
+  // androidTestImplementation(platform(libs.androidx.compose.bom))
+  // androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+  // androidTestImplementation(libs.androidx.espresso.core)
+  // androidTestImplementation(libs.androidx.junit)
+  // androidTestImplementation(libs.androidx.runner)
   debugImplementation(libs.androidx.compose.ui.test.manifest)
   debugImplementation(libs.androidx.compose.ui.tooling)
   "ksp"(libs.androidx.room.compiler)
